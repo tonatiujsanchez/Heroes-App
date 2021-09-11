@@ -1,2 +1,51 @@
-<h1>Heroes App</h1>
-<router-outlet></router-outlet>
+<mat-sidenav-container fullscreen>
+
+    <!-- === === === Sidebar === === === -->
+    <mat-sidenav #sidenav>
+        <!-- === === === Sidebar - Head === === === -->
+        <mat-toolbar  fxLayout="row" fxLayoutAlign="space-between center">
+            <button mat-icon-button (click)="sidenav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <span>Navegación</span>
+        </mat-toolbar>
+        
+        <!-- === === === Sidebar - List === === === -->
+        <mat-nav-list>
+            <a mat-list-item routerLink="./listado" (click)="sidenav.toggle()">
+                <mat-icon mat-list-icon>list_alt</mat-icon>
+                <span>Listado de Heroes</span>
+            </a>
+            <a mat-list-item routerLink="./agregar" (click)="sidenav.toggle()">
+                <mat-icon mat-list-icon>add</mat-icon>
+                <span>Nuevo Heroe</span>
+            </a>
+            <a mat-list-item routerLink="./buscar" (click)="sidenav.toggle()">
+                <mat-icon mat-list-icon>search</mat-icon>
+                <span>Buscar Heroe</span>
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+    
+    <!-- === === === Nabvar === === === -->
+    <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
+        <button mat-icon-button (click)="sidenav.toggle()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <ng-container>
+            <span>{{ _heroes.titlePage }}</span>
+        </ng-container>
+        
+        <button mat-button color="warn">
+            <mat-icon class="mr-1">undo</mat-icon>
+            <span>Cerrar Sesión</span>
+        </button>
+    </mat-toolbar>
+
+    <!-- === === === Conteiner - Pages === === === -->
+    <div class="pages-container">
+        <router-outlet></router-outlet>
+    </div>
+</mat-sidenav-container>
+
+
