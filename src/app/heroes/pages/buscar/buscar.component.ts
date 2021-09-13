@@ -14,7 +14,7 @@ export class BuscarComponent implements OnInit {
   termino:string = '';
   heroes: Heroe[] = [];
 
-  heroeSelecionado!:Heroe;
+  heroeSelecionado!:Heroe | null;
 
   constructor( 
     private _heroes: HeroesService
@@ -27,14 +27,17 @@ export class BuscarComponent implements OnInit {
   }
 
   buscando(){
-    this._heroes.getSugerencias( this.termino )
+    this._heroes.getSugerencias( this.termino.trim() )
       .subscribe(
         data => this.heroes = data
       )
   }
 
   opcionSelecionada( event:MatAutocompleteSelectedEvent ){
-    if( event.option.value === '' ){
+    
+    if( event.option.value === ''){
+      this.heroeSelecionado = null;
+      console.warn('Sin resultados');
       return;
     }
     
@@ -43,8 +46,10 @@ export class BuscarComponent implements OnInit {
     
     this._heroes.getHeroePorId( heroe.id! )
       .subscribe(
-        heroe => this.heroeSelecionado = heroe
+        (heroe) => this.heroeSelecionado = heroe
       );
+    
+
     
   }
 
