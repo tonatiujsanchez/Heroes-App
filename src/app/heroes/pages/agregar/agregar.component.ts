@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HeroesService } from '../../services/heroes.service';
 
 @Component({
   selector: 'app-agregar',
@@ -8,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AgregarComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private _heroes: HeroesService
+  ) { }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this._heroes.titlePage = 'Nuevo Heroe';
+    });
+    
   }
 
 }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HeroesService } from '../../services/heroes.service';
+import { Heroe } from '../../interfaces/heroes.interface';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-buscar',
@@ -9,9 +11,41 @@ import { HeroesService } from '../../services/heroes.service';
 })
 export class BuscarComponent implements OnInit {
 
-  constructor( private _heroes: HeroesService ) { }
+  termino:string = '';
+  heroes: Heroe[] = [];
+
+  heroeSelecionado!:Heroe;
+
+  constructor( 
+    private _heroes: HeroesService
+  ) { }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this._heroes.titlePage = 'Buscar Heroe';
+    });
+  }
+
+  buscando(){
+    this._heroes.getSugerencias( this.termino )
+      .subscribe(
+        data => this.heroes = data
+      )
+  }
+
+  opcionSelecionada( event:MatAutocompleteSelectedEvent ){
+    if( event.option.value === '' ){
+      return;
+    }
+    
+    const heroe:Heroe = event.option.value;
+    this.termino = heroe.superhero;
+    
+    this._heroes.getHeroePorId( heroe.id! )
+      .subscribe(
+        heroe => this.heroeSelecionado = heroe
+      );
+    
   }
 
 }

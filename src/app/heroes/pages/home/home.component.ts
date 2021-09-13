@@ -12,7 +12,9 @@ import { HeroesService } from '../../services/heroes.service';
 })
 export class HomeComponent implements OnInit {
 
-
+  get titlePage(): string{
+    return this._heroes.titlePage;
+  }
 
   constructor( 
     public _heroes:HeroesService
@@ -20,6 +22,4 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-
 }

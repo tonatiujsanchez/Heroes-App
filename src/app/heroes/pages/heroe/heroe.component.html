@@ -1,1 +1,43 @@
-<p>heroe works!</p>
+<mat-grid-list cols="1" rowHeight="3:1" *ngIf="!heroe; else heroeContainer">
+    <mat-grid-tile>
+        <mat-spinner></mat-spinner>
+    </mat-grid-tile>
+</mat-grid-list>
+
+
+<ng-template #heroeContainer>
+    <div fxLayout="row" fxLayoutGap="24px" fxLayoutAlign="center top" >
+        <div fxFlex="30" class="imagen">
+            <h1>{{ heroe.superhero }}</h1>
+            <mat-divider></mat-divider>
+            <br>
+            <img class="mr-1" [src]="heroe | imagen" [alt]="heroe.superhero">
+        </div>
+        <div fxFlex="30" class="data">
+            <h2>{{ heroe.publisher }}</h2>
+            <mat-divider></mat-divider>
+            <br>
+            
+            <mat-list>
+                <mat-list-item>
+                    {{ heroe.first_appearance }}
+                </mat-list-item>
+                <mat-list-item>
+                    {{ heroe.publisher }}
+                </mat-list-item>
+                <mat-list-item>
+                    {{ heroe.alter_ego }}
+                </mat-list-item>
+                <mat-list-item>
+                    {{ heroe.characters }}
+                </mat-list-item>
+                <br>
+                <mat-list-item>
+                    <button mat-raised-button color="warn" (click)="regresar()">
+                        <mat-icon>west</mat-icon> Regresar 
+                    </button>
+                </mat-list-item>
+            </mat-list>
+        </div>
+    </div>
+</ng-template>
