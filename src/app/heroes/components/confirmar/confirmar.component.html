@@ -1,0 +1,9 @@
+<div style="text-align: center;">
+    <h2>¿Estás seguro?</h2>
+    <h4>Esta apunto de borrar a {{ data }}</h4>
+    <br>
+    <div fxLayout="row" fxLayoutGap="24px" fxLayoutAlign="center top">
+        <button mat-button color="warn" (click)="borrar()">¡Si! Borrar</button>
+        <button mat-button (click)="cerrar()">Cancelar</button>
+    </div>
+</div>

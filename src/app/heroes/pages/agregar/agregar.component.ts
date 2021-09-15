@@ -3,6 +3,9 @@ import { HeroesService } from '../../services/heroes.service';
 import { Heroe, Publisher } from '../../interfaces/heroes.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmarComponent } from '../../components/confirmar/confirmar.component';
 
 @Component({
   selector: 'app-agregar',
@@ -34,7 +37,9 @@ export class AgregarComponent implements OnInit {
   constructor(
     private _heroes: HeroesService,
     private activatedRoute: ActivatedRoute,
-    public router: Router
+    public router: Router,
+    private _snackBar: MatSnackBar,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -70,25 +75,49 @@ export class AgregarComponent implements OnInit {
       // Actualizar
       this._heroes.actualizarHeroe( this.heroe )
         .subscribe( 
-          (heroe)=> console.log( 'Se actualizó: ', heroe ) 
+          (heroe)=> {
+            this.openSnackBar( `Se actualizó ${ this.heroe.superhero }` );
+          } 
         );
     }else{
       // Nuevo
       this._heroes.agregarHeroe( this.heroe )
         .subscribe( 
-          (heroe) => this.router.navigate(['/heroes/editar', heroe.id])        
+          (heroe) => {
+            this.openSnackBar( `Se creo correctamente` );
+            this.router.navigate(['/heroes/editar', heroe.id]);
+          }        
         );
     }
     
   }
 
   eliminar(){
-    this._heroes.eliminarHeroe( this.heroe.id! ).subscribe(
-      (resp) => {
-        this.router.navigate(['/heroes/listado'])
-        console.log( resp )
-      });
-    
+    const dialogRef = this.dialog.open( ConfirmarComponent, {
+      width: '300px',
+      data: this.heroe.superhero
+    });
+
+    dialogRef.afterClosed().subscribe(
+      resp =>{
+
+        if( resp ){
+          this._heroes.eliminarHeroe( this.heroe.id! ).subscribe(
+            (resp) => {
+              this.router.navigate(['/heroes/listado']);
+              this.openSnackBar('¡Eliminado!');
+          });
+        }
+
+      }
+    );
+
+  }
+
+  openSnackBar( msj:string ):void {
+    this._snackBar.open(msj, 'ok!', {
+      duration: 1500
+    });
   }
 
 }
