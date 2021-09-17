@@ -1,5 +1,21 @@
-<mat-grid-list cols="1" rowHeight="2:1">
-    <mat-grid-tile>
-        <button mat-raised-button color="primary" (click)="login()">Ingresar</button>
-    </mat-grid-tile>
-</mat-grid-list>
+<mat-drawer-container fullscreen>
+    <div class="formulario-login">
+        <div class="formulario__content">
+            <mat-form-field appearance="fill">
+              <mat-label>Ingrese si ID</mat-label>
+              <input matInput (keyup.enter)="login(inputID.value)" #inputID>
+            </mat-form-field>
+
+            <button mat-raised-button 
+                    color="primary" 
+                    (click)="login( inputID.value )">
+                    Ingresar
+            </button>
+            <button mat-raised-button
+                    color="warn" 
+                    (click)="accederSinLogin()">
+                    Ya estoy logeado
+            </button>
+        </div>
+    </div>
+</mat-drawer-container>

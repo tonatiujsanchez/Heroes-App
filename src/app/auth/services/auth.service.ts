@@ -28,9 +28,9 @@ export class AuthService {
         return of( false );
       }
 
-      const idUser: string = JSON.stringify( localStorage.getItem( 'token' ) );
+      let idUser = localStorage.getItem( 'token' )?.toString();
 
-      return this.http.get<Auth>( `${ this.baseUrl }/usuarios/${ 1 }` )
+      return this.http.get<Auth>( `${ this.baseUrl }/usuarios/${ idUser }` )
         .pipe(
           map( auth =>{
             this.authUser = auth;
@@ -41,7 +41,7 @@ export class AuthService {
 
 
 
-  login( idUsuario:number ):Observable<Auth>{
+  login( idUsuario:string ):Observable<Auth>{
     return this.http.get<Auth>( `${ this.baseUrl }/usuarios/${ idUsuario }` )
     .pipe(
       tap( auth =>{

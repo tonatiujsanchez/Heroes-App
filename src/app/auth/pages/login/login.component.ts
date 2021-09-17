@@ -5,8 +5,22 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styles: [
-  ]
+  styles: [`
+  .formulario-login{
+    width: 100vw;
+    height: 100vh;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .formulario__content{
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  `]
 })
 export class LoginComponent {
 
@@ -15,17 +29,27 @@ export class LoginComponent {
     private _auth: AuthService
   ) { }
 
-  login(){
-    // Ir al backend
-    // Un usuario
-    this._auth.login( 1 )
+  login( idUsuario:string ){
+    if( idUsuario.trim() === '' ){
+      console.warn('Ingrese un ID');
+      return;
+    }
+
+    this._auth.login( idUsuario )
       .subscribe(
         (resp)=>{
           if( resp.id ){
             this.router.navigate(['/heroes']);
           }
-        },(err)=>{  }  
+        },(err)=>{ 
+          console.log('No se encontró ningún usuario con el ID ingresado.');
+          
+         }  
       );
+  }
+
+  accederSinLogin(){
+    this.router.navigate(['/heroes/listado']);
   }
 
 
