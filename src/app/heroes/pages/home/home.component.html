@@ -35,11 +35,13 @@
         <ng-container>
             <span>{{ titlePage}}</span>
         </ng-container>
-        
-        <button mat-button color="warn">
-            <mat-icon class="mr-1">undo</mat-icon>
-            <span>Cerrar Sesión</span>
-        </button>
+        <div>
+            <span>{{ auth.usuario }}</span>
+            <button mat-button color="warn" (click)="logout()">
+                <mat-icon class="mr-1">undo</mat-icon>
+                <span>Cerrar Sesión</span>
+            </button>
+        </div>
     </mat-toolbar>
 
     <!-- === === === Conteiner - Pages === === === -->
